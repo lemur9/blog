@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp -r src/content .next/standalone/src/ 2>/dev/null || true",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
@@ -34,6 +34,7 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
