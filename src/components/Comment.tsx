@@ -18,8 +18,8 @@ interface CommentProps {
 export default function Comment(props?: Partial<CommentProps>) {
   const {
     repo = process.env.NEXT_PUBLIC_GISCUS_REPO || "lemur9/blog",
-    repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID || "",
-    categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || "",
+    repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID || "R_kgDOS-LcrQ",
+    categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || "DIC_kwDOS-Lcrc4C_aEM",
     mapping = process.env.NEXT_PUBLIC_GISCUS_MAPPING || "og:title",
     strict = process.env.NEXT_PUBLIC_GISCUS_STRICT || "0",
     reactionsEnabled = process.env.NEXT_PUBLIC_GISCUS_REACTIONS_ENABLED || "1",
