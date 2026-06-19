@@ -1,65 +1,60 @@
-import Image from "next/image";
+import { getAllPosts } from "@/lib/mdx";
+import ArticleList from "@/components/ArticleList";
+import Link from "next/link";
+import { BookOpen, Tag } from "lucide-react";
 
-export default function Home() {
+export default async function HomePage() {
+  const posts = await getAllPosts();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+      {/* Hero */}
+      <div className="text-center mb-10">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4">
+          <BookOpen className="w-4 h-4" />
+          技术博客
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+          前端爪の博客
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          记录前端技术的学习、实践与思考。聚焦 Next.js、React、TypeScript、Tailwind CSS 等现代前端技术。
+        </p>
+      </div>
+
+      {/* Article List with Search + Tag Filter */}
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-blue-600" />
+          最新文章
+        </h2>
+        <Link href="/tags" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+          <Tag className="w-4 h-4" />
+          查看全部标签
+        </Link>
+      </div>
+
+      <ArticleList posts={posts} />
+
+      {/* Stats */}
+      <div className="mt-12 grid grid-cols-3 gap-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-2xl font-bold text-blue-600">{posts.length}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">篇文章</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-2xl font-bold text-green-600">
+            {new Set(posts.flatMap((p) => p.tags)).size}
           </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">个标签</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-2xl font-bold text-purple-600">
+            {posts.reduce((sum, p) => sum + p.readingTime, 0)}
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">分钟阅读</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

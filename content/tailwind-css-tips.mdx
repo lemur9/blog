@@ -1,0 +1,139 @@
+---
+title: Tailwind CSS 实用技巧汇总
+date: 2026-06-13
+author: Lemur
+tags:
+  - Tailwind CSS
+  - 前端
+  - CSS
+  - 样式
+summary: 整理 Tailwind CSS 的实用技巧和最佳实践，包括响应式设计、暗色模式、自定义主题、动画效果等，帮助你更高效地使用 Tailwind。
+status: published
+---
+
+## 什么是 Tailwind CSS？
+
+Tailwind CSS 是一个 Utility-First CSS 框架，提供底层的原子类来快速构建自定义 UI，无需编写自定义 CSS。
+
+## 实用技巧
+
+### 1. 响应式设计
+
+```html
+<!-- 小屏幕隐藏，大屏幕显示 -->
+<div class="hidden lg:block">
+  桌面端导航
+</div>
+
+<!-- 渐变字体 -->
+<h1 class="text-sm md:text-base lg:text-xl">
+  响应式字体
+</h1>
+```
+
+### 2. 暗色模式
+
+```html
+<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+  自动适配暗色模式
+</div>
+```
+
+开启配置：
+
+```ts
+// tailwind.config.ts
+export default {
+  darkMode: "class",  // 或 "media"
+  theme: {
+    extend: {},
+  },
+};
+```
+
+### 3. 自定义主题
+
+```ts
+// tailwind.config.ts
+export default {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: "#eff6ff",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+        },
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["Fira Code", "monospace"],
+      },
+    },
+  },
+};
+```
+
+### 4. 常用布局模式
+
+```html
+<!-- 垂直居中 -->
+<div class="flex items-center justify-center min-h-screen">
+  <div>居中内容</div>
+</div>
+
+<!-- 圣杯布局 -->
+<div class="grid grid-cols-[250px_1fr_250px] gap-4">
+  <aside>侧栏</aside>
+  <main>主要内容</main>
+  <aside>侧栏</aside>
+</div>
+
+<!-- 瀑布流 -->
+<div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+  <div class="break-inside-avoid">卡片1</div>
+  <div class="break-inside-avoid">卡片2</div>
+</div>
+```
+
+### 5. 动画和过渡
+
+```html
+<!-- 悬停效果 -->
+<button class="bg-blue-500 hover:bg-blue-600 
+               active:scale-95 transition-all duration-200">
+  点击按钮
+</button>
+
+<!-- 自定义 keyframes -->
+<div className="animate-spin">旋转图标</div>
+<div className="animate-pulse">脉冲效果</div>
+```
+
+### 6. 伪元素
+
+```html
+<!-- 清除浮动 -->
+<div class="clearfix">
+  <div class="float-left">左侧浮动</div>
+</div>
+
+<!-- before/after 伪元素 -->
+<div class="relative before:content-[''] 
+            before:absolute before:inset-0 
+            before:bg-black/50">
+  覆盖层内容
+</div>
+```
+
+## 最佳实践
+
+1. **使用 `@apply` 提取常用样式**
+2. **合理组织类名**：按布局→尺寸→颜色→交互排序
+3. **善用 `dark:` 前缀**：统一处理暗色模式
+4. **组件化**：复杂 UI 拆为小组件
+
+## 总结
+
+Tailwind CSS 的学习曲线初期较陡，但掌握后开发效率大幅提升。关键是多写多练，形成肌肉记忆。

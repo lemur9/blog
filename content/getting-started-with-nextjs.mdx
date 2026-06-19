@@ -1,0 +1,132 @@
+---
+title: Next.js 14 App Router 完全指南
+date: 2026-06-12
+author: Lemur
+tags:
+  - Next.js
+  - React
+  - 前端
+  - 框架
+summary: 深入理解 Next.js 14 引入的 App Router，包括 Server Components、Route Groups、Layouts 等核心概念，帮助你构建现代化的 Web 应用。
+status: published
+---
+
+## App Router 概述
+
+Next.js 14 引入了全新的 App Router，基于 React Server Components (RSC)，带来了全新的开发体验。
+
+### 什么是 App Router？
+
+App Router 使用文件系统即 API 的理念，目录结构直接映射到路由结构：
+
+```
+app/
+├── layout.tsx        # 根布局
+├── page.tsx          # 首页
+├── loading.tsx       # 加载状态
+├── error.tsx         # 错误边界
+└── post/
+    └── [slug]/
+        └── page.tsx  # 动态路由
+```
+
+### Server Components vs Client Components
+
+**Server Components（默认）**：
+
+```tsx
+// 这是 Server Component
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  const post = await fetchPost(params.slug);
+  return <article>{post.title}</article>;
+}
+```
+
+**Client Components**：
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      计数: {count}
+    </button>
+  );
+}
+```
+
+## 核心特性
+
+### 1. Layouts
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="zh">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### 2. Parallel Routes
+
+可以在相同位置渲染多个路由：
+
+```tsx
+// app/dashboard/layout.tsx
+return (
+  <main>
+    <Sidebar />
+    <section>@users</section>
+    <section>@analytics</section>
+  </main>
+);
+```
+
+### 3. Intercepting Routes
+
+用于模态框和抽屉效果：
+
+```
+app/
+├── (main)/
+│   └── @modal/(.)post/
+│       └── [slug]/
+│           └── page.tsx  // 拦截模态框
+```
+
+## 性能优化
+
+### 数据获取
+
+```tsx
+// 自动缓存，无需手动管理
+export default async function Page() {
+  const res = await fetch("https://api.example.com/posts");
+  const posts = await res.json();
+  return <Blog posts={posts} />;
+}
+```
+
+### 流式渲染
+
+```tsx
+// app/loading.tsx
+export default function Loading() {
+  return <Spinner />;
+}
+```
+
+## 总结
+
+App Router 是 Next.js 的未来，Server Components 带来了更好的性能和开发体验。建议新项目直接使用 App Router。
