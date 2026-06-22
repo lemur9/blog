@@ -9,7 +9,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
           <BookOpen className="w-6 h-6 text-blue-600" />
-          <span>前端爪の博客</span>
+          <span>Lemurの博客</span>
         </Link>
 
         {/* Nav */}

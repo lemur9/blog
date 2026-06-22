@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "前端爪の博客",
-    template: "%s | 前端爪の博客",
+    default: "Lemurの博客",
+    template: "%s | Lemurの博客",
   },
   description: "前端爪的技术博客，记录 Next.js、React、TypeScript、Tailwind CSS 等前端技术的学习与实践。",
   keywords: ["前端", "Next.js", "React", "TypeScript", "Tailwind CSS", "技术博客", "MDX"],
@@ -29,16 +29,16 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "前端爪の博客",
+    title: "Lemurの博客",
     description: "前端爪的技术博客，记录前端技术的学习与实践。",
-    siteName: "前端爪の博客",
+    siteName: "Lemurの博客",
     locale: "zh_CN",
     type: "website",
     url: "https://blog.lemur.dev",
   },
   twitter: {
     card: "summary_large_image",
-    title: "前端爪の博客",
+    title: "Lemurの博客",
     description: "前端爪的技术博客，记录前端技术的学习与实践。",
   },
   alternates: {

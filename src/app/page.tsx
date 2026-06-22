@@ -15,7 +15,7 @@ export default async function HomePage() {
           技术博客
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">
-          前端爪の博客
+          Lemurの博客
         </h1>
         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           记录前端技术的学习、实践与思考。聚焦 Next.js、React、TypeScript、Tailwind CSS 等现代前端技术。

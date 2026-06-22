@@ -6,7 +6,7 @@ export async function GET() {
   const siteUrl = "https://blog.lemur.dev";
 
   const feed = new rss({
-    title: "前端爪の博客",
+    title: "Lemurの博客",
     description: "记录前端技术的学习、实践与思考",
     site_url: siteUrl,
     feed_url: `${siteUrl}/feed.xml`,
