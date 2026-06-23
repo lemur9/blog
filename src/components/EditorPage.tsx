@@ -183,8 +183,8 @@ export default function EditorPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto flex gap-6 p-6">
-        <aside className="w-72 shrink-0">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-6">
+        <aside className="w-full lg:w-72 shrink-0 order-1 lg:order-1">
           <button onClick={handleNew} className="w-full mb-4 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors">
             <Plus className="w-4 h-4" /> 新建文章
           </button>
@@ -227,7 +227,7 @@ export default function EditorPage() {
           </div>
         </aside>
 
-        <main className="flex-1 min-w-0">
+        <main className="flex-1 min-w-0 order-2 lg:order-2">
           {toast && (
             <div className={"mb-4 p-3 rounded-xl flex items-center gap-2 " + (toast.type === "success" ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400" : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400")}>
               {toast.type === "success" ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
@@ -243,12 +243,12 @@ export default function EditorPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4 mb-4">
-              <div className="flex-1 min-w-[200px]">
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              <div className="flex-1 min-w-0">
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">分类</label>
                 <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="输入分类" className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
               </div>
-              <div className="flex-1 min-w-[200px]">
+              <div className="flex-1 min-w-0">
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">标签（逗号分隔）</label>
                 <input type="text" value={tagsStr} onChange={(e) => setTagsStr(e.target.value)} placeholder="Next.js, TypeScript" className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
               </div>
@@ -266,16 +266,16 @@ export default function EditorPage() {
                   {showPreview ? (<><EyeOff className="w-4 h-4" /> 隐藏预览</>) : (<><Eye className="w-4 h-4" /> 显示预览</>)}
                 </button>
               </div>
-              <div className="flex gap-4" style={{ minHeight: "400px" }}>
+              <div className="flex flex-col lg:flex-row gap-4" style={{ minHeight: "400px" }}>
                 <textarea
                   value={editorContent}
                   onChange={(e) => setEditorContent(e.target.value)}
                   placeholder="在这里写 Markdown..."
-                  className={"flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y " + (showPreview ? "w-1/2" : "w-full")}
+                  className={"flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y " + (showPreview && "lg:w-1/2")}
                   style={{ minHeight: "400px" }}
                 />
                 {showPreview && (
-                  <div className="w-1/2 pl-4 border-l border-gray-200 dark:border-gray-700 overflow-auto">
+                  <div className={"w-full lg:w-1/2 lg:pl-4 lg:border-l border-gray-200 dark:border-gray-700 overflow-auto " + (showPreview ? "block" : "hidden")}>
                     <div className="prose prose-sm dark:prose-invert max-w-none">
                       <ReactMarkdown>{editorContent || "*预览区域*"}</ReactMarkdown>
                     </div>

@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
 export default function DarkModeToggle() {
-  const [isDark, setIsDark] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
+  const [isDark, setIsDark] = useState<boolean | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("darkMode");
@@ -14,10 +13,10 @@ export default function DarkModeToggle() {
     } else {
       setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
     }
-    setHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (isDark === null) return;
     if (isDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("darkMode", "true");
@@ -27,7 +26,7 @@ export default function DarkModeToggle() {
     }
   }, [isDark]);
 
-  if (!hydrated) return null;
+  if (isDark === null) return null;
 
   const toggle = () => setIsDark((prev) => !prev);
 
