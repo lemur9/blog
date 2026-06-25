@@ -170,7 +170,12 @@ export default function EditorPage() {
     setSummary("");
   };
 
-  const filteredBlogs = [...blogs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const filteredBlogs = (() => {
+    let list = [...blogs];
+    if (activeTab === "draft") list = list.filter((b) => b.status === "draft");
+    else if (activeTab === "published") list = list.filter((b) => b.status === "published");
+    return list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  })();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
