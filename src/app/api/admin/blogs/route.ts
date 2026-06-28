@@ -2,7 +2,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminAuth } from "@/lib/admin-auth";
-import { getAllBlogs, createBlog, BlogCreateInput, BlogListParams } from "@/lib/mdx";
+import { getAllBlogs, createBlog, BlogCreateInput, BlogListParams, POSTS_DIR } from "@/lib/mdx";
 
 /**
  * 中间件式认证检查

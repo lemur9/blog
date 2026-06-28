@@ -409,6 +409,13 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
 export async function createBlog(
   input: BlogCreateInput
 ): Promise<{ slug: string }> {
+  // 检查是否可写
+  try {
+    fs.accessSync(POSTS_DIR, fs.constants.W_OK);
+  } catch {
+    throw new Error("内容目录不可写，请在 Vercel 上配置 CONTENT_DIR 环境变量");
+  }
+
   const slug = generateSlug(input.title);
   const now = new Date().toISOString().split("T")[0];
 
