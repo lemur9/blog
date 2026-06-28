@@ -85,6 +85,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 检查是否在生产环境
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { success: false, error: "生产环境暂不支持创建文章，请在本地开发" },
+        { status: 501 }
+      );
+    }
+
     const result = await createBlog(body);
 
     return NextResponse.json(
