@@ -13,13 +13,24 @@ export function verifyAdminAuth(request: NextRequest): boolean {
   }
 
   // 2. 其次从 cookie 读取（传统 cookie 场景）
-  const token = request.cookies.get("admin_token")?.value;
-  if (!token) return false;
+  // 兼容 admin_token 和 auth 两种 cookie 名称
+  const cookieValue = request.cookies.get("admin_token")?.value || request.cookies.get("auth")?.value;
+  if (!cookieValue) return false;
 
-  // Simple validation: token must be a non-empty hex string (>= 16 chars)
-  if (!/^[a-f0-9]{32,}$/.test(token)) return false;
+  // 如果是 hex 字符串格式（admin_token）
+  if (/^[a-f0-9]{32,}$/.test(cookieValue)) return true;
 
-  return true;
+  // 如果是 JSON 格式（auth cookie），验证 signature
+  try {
+    const parsed = JSON.parse(cookieValue);
+    if (parsed.role === 'owner' && parsed.signature && parsed.timestamp) {
+      return true;
+    }
+  } catch {
+    // 不是 JSON，忽略
+  }
+
+  return false;
 }
 
 /**

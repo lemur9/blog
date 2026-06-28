@@ -208,6 +208,10 @@ export async function getAllPosts(): Promise<PostMeta[]> {
     const slug = file.replace(/\.mdx$/, "");
     const readingTime = estimateReadingTime(content);
 
+    // 只返回已发布的文章
+    const status = (meta.status as string) || "published";
+    if (status !== "published") continue;
+
     posts.push({
       slug,
       title: (meta.title as string) || "",
