@@ -12,6 +12,9 @@ try {
   // 优先使用环境变量
   if (process.env.CONTENT_DIR) {
     POSTS_DIR = process.env.CONTENT_DIR;
+  } else if (process.env.TMPDIR) {
+    // Vercel 部署时使用 TMPDIR 作为可写目录
+    POSTS_DIR = path.join(process.env.TMPDIR, "blog-content");
   } else {
     POSTS_DIR = path.join(__dirname, "..", "content");
     if (!fs.existsSync(POSTS_DIR)) {
