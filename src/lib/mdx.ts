@@ -6,11 +6,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Resolve content directory for both dev and standalone deployment
+// 优先使用环境变量 CONTENT_DIR（Vercel 部署时需要设置为可写路径）
 let POSTS_DIR: string;
 try {
-  POSTS_DIR = path.join(__dirname, "..", "content");
-  if (!fs.existsSync(POSTS_DIR)) {
-    POSTS_DIR = path.join(process.cwd(), "content");
+  // 优先使用环境变量
+  if (process.env.CONTENT_DIR) {
+    POSTS_DIR = process.env.CONTENT_DIR;
+  } else {
+    POSTS_DIR = path.join(__dirname, "..", "content");
+    if (!fs.existsSync(POSTS_DIR)) {
+      POSTS_DIR = path.join(process.cwd(), "content");
+    }
   }
 } catch {
   POSTS_DIR = path.join(process.cwd(), "content");
